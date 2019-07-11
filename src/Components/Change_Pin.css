@@ -1,0 +1,33 @@
+#container.diff{
+    width: 500px;
+    height: 250px;
+    background-color: brown;
+    color: white;
+    border: 1px solid black;
+    margin-left: 350px;
+    border-radius: 8px;
+}
+button#diff {
+    border-radius: 5px;
+    background-color: black;
+    color: white;
+    height: 35px;
+    width: 70px;
+    margin: 10px 0px 0px 200px;
+}
+h1{
+    text-align: center;
+    color: #FFE4C4;
+}
+input#put{
+    margin-left: 0px;
+    text-align: center;
+}
+
+.effect{
+    color: white;
+    text-decoration: none; 
+}
+#centre{
+    margin-left: 150px;
+}

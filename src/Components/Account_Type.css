@@ -1,0 +1,35 @@
+#container.acc{
+				width: 500px;
+				height: 300px;
+				background-color: brown;
+				color: white;
+				border: 1px solid black;
+				margin-left: 350px;
+				border-radius: 8px;
+			}
+			button {
+				border-radius: 5px;
+				background-color: black;
+				color: white;
+				height: 35px;
+				width: 120px;
+			}
+			h1{
+				text-align: center;
+				color: #FFE4C4;
+			}
+			#left{
+				float: left;
+				width: 50px;
+				margin-left: 5px;
+			}
+			#right{
+				float: right;
+				width: 50px;
+				margin-right: 75px;
+			}
+			.effect{
+				color: white;
+				text-decoration: none; 
+			}
+			
