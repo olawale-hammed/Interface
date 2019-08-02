@@ -1,21 +1,22 @@
 import React from 'react'
 import './index.css'
 import ReactDOM from 'react-dom'
-import { BrowserRouter as Router, Redirect} from 'react-router-dom';
-import Route from 'react-router-dom/Route';
+import { BrowserRouter as Router, Redirect} from 'react-router-dom'
+import Route from 'react-router-dom/Route'
 import Menu from './Components/Menu'
+import axios from 'axios'
 
 class Login extends React.Component{
 	constructor(props){
 		super(props)
-		this.state = {input: '', status: false, error: 'Input value must be four digits and cannot be empty', Amount: 50000}
+		this.state = {pin: '', status: false, error: 'Input value must be four digits and cannot be empty', Amount: 50000}
 		// this.inputRef = React.createRef()
 		this.cbRef = null
 		this.setCbRef = event => this.cbRef = event
 	}
 	componentDidMount(){
 		// this.inputRef.current.focus()
-		this.cbRef.focus()
+		this.cbRef.focus()		
 	}
 	handleRedirect = ()=>{
 		if(this.state.status){
@@ -23,14 +24,19 @@ class Login extends React.Component{
 		}
 	}
 	handleChange = (e) =>{
-		this.setState({input: e.target.value})
+		this.setState({pin: e.target.value})
 	}
-	handleSubmit = () => {
-		if(this.state.input.length < 4 || isNaN(this.state.input) || this.state.input === null){
+	handleSubmit = (e) => {
+		e.preventDefault()
+		if(this.state.pin.length < 4 || isNaN(this.state.pin)){
 			document.getElementById('demo').innerHTML = this.state.error
 		}else{
-			this.setState({status: true})
-			localStorage.setItem('Amount', this.state.Amount)
+			axios.get(`http://localhost:8080/api/contacts/${this.state.pin}`).then(res => {
+				if(res.data.pin){
+					console.log(res)	
+					this.setState({status: true})
+				}			
+        	}).catch(err => console.log(err))
 		}
 	}
 	
@@ -45,8 +51,10 @@ class Login extends React.Component{
 							<h1> Welcome </h1>
 							<h2> Please Enter Your Digit Number </h2> 
 							<h4 id='demo'> </h4>
-							<input type='text' ref={this.setCbRef} onChange={(e) => this.handleChange(e)} size='4' maxLength='4' value={this.input}/><br />
-							<button id="diff" onClick={this.handleSubmit}> Submit </button> 
+							<form action='/menu' >
+								<input name='pin' type='password' ref={this.setCbRef} onChange={this.handleChange} size='4' maxLength='4' value={this.input}/><br />
+								<button type='submit' id="diff" onClick={this.handleSubmit}> Submit </button> 
+							</form>
 						</div>)
 				}} />
 				<Route path='/menu' exact strick component={Menu} />
