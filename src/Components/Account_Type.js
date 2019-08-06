@@ -9,7 +9,7 @@ import Menu from './Menu'
 class AccountType extends React.Component{
 	constructor(props){
 		super(props)
-		this.state = {Debit: this.props.debit}
+		this.state = {Debit: this.props.debit, pin: this.props.pin}
 	}
 	render(){
 		return(
@@ -30,7 +30,8 @@ class AccountType extends React.Component{
 								
 				 		</div>
 				 	);}} />
-					 <Route path="/amount" exact strict render={(routeProps) => (<Amount {...routeProps} debit={this.state.Debit} />)} />
+					 <Route path="/amount" exact strict render={(routeProps) => 
+						(<Amount {...routeProps} debit={this.state.Debit} pin={this.state.pin}/>)} />
 					 <Route path="/menu" exact strict component={Menu} />
 					<Route path="/" exact strict component={Login} />
 			</div>

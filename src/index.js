@@ -9,7 +9,7 @@ import axios from 'axios'
 class Login extends React.Component{
 	constructor(props){
 		super(props)
-		this.state = {pin: '', status: false, error: 'Input value must be four digits and cannot be empty', Amount: 50000}
+		this.state = {pin: '', status: false, error: 'Input value must be four digits and cannot be empty', err: '', Amount: null}
 		// this.inputRef = React.createRef()
 		this.cbRef = null
 		this.setCbRef = event => this.cbRef = event
@@ -34,9 +34,10 @@ class Login extends React.Component{
 			axios.get(`http://localhost:8080/api/contacts/${this.state.pin}`).then(res => {
 				if(res.data.pin){
 					console.log(res)	
-					this.setState({status: true})
-				}			
-        	}).catch(err => console.log(err))
+					this.setState({status: true, Amount: res.data.balance})
+					// localStorage.setItem('Amount', res.data.balance)
+				}		
+			}).catch((prevState) => this.setState({err: 'Incorrect pin', pin: prevState.pin}))
 		}
 	}
 	
@@ -50,14 +51,16 @@ class Login extends React.Component{
 							{this.handleRedirect()}
 							<h1> Welcome </h1>
 							<h2> Please Enter Your Digit Number </h2> 
-							<h4 id='demo'> </h4>
+							<h4 id='demo'> </h4>  <h4>{this.state.err}</h4>
 							<form action='/menu' >
-								<input name='pin' type='password' ref={this.setCbRef} onChange={this.handleChange} size='4' maxLength='4' value={this.input}/><br />
+								<input name='pin' type='password' ref={this.setCbRef} onChange={this.handleChange} 
+									size='4' maxLength='4' value={this.input}/><br />
 								<button type='submit' id="diff" onClick={this.handleSubmit}> Submit </button> 
 							</form>
 						</div>)
 				}} />
-				<Route path='/menu' exact strick component={Menu} />
+				<Route path='/menu' exact strict render={(routeProps) => 
+						(<Menu {...routeProps} debit={this.state.Amount} pin={this.state.pin}/>)} />
 				 
 			</div>
 			</Router>

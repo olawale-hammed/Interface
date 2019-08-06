@@ -6,29 +6,35 @@ import Message from './Message'
 import Message2 from './Message2'
 import Login from '../index.js'
 import Other_Amount from './Other_Amount'
+import axios from 'axios'
 
 class Amount extends React.Component{
 	constructor(props){
 		super(props)
-		this.state = {Debit: this.props.debit, status: false, amount: 0}
+		this.state = {Debit: 0, status: false, amount: 0, pin: this.props.pin}
 	}
 	handleClick = (e) => {
-			this.setState({Debit: this.props.debit - e.target.value, amount: e.target.value, status: true})
-		}
+		this.setState({Debit: this.props.debit - e.target.value, amount: e.target.value, status: true})
+	}
 	handleRedirect = ()	=> {
-		if(this.state.amount <= localStorage.getItem('Amount')){
-			localStorage.Amount = this.state.Debit
-		}else{
-			console.log(this.state.amount)
-			return <Redirect to='/message2' />
-		}
+	if(this.state.amount <= this.state.Debit){
+		axios.put(`http://localhost:8080/api/contacts/${this.state.pin}`, {balance: this.state.Debit}).then((rs) => console.log('Done',rs)
+		).catch(err => console.log(err))
 		if(this.state.status){
 			console.log(this.state.amount)
 			return <Redirect to='/message' />
 		}
+		
+	}else{
+		console.log(this.state.amount)
+		return <Redirect to='/message2' />
+	}
+	
 	}
 
 	render(){
+		console.log(this.state.amount)
+		console.log(this.state.Debit)
 		return(
 			<Router>
 			<div >

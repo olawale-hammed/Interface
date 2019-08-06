@@ -12,7 +12,7 @@ import Change_Pin from './Change_Pin';
 class Menu extends React.Component{
 	constructor(props){
 		super(props)
-		this.state = {Debit: localStorage.getItem('Amount')}
+		this.state = {Debit: this.props.debit, pin: this.props.pin}
 	}
 	render(){
 		return(
@@ -35,8 +35,8 @@ class Menu extends React.Component{
 								
 				 		</div>
 				 	);}} />
-				<Route path='/acc_type' exact strick render={(routeProps) => <AccountType {...routeProps} debit={this.state.Debit} />} />
-				<Route path='/acctype_balance' exact strick render={(routeProps) => <AccountType_Balance {...routeProps} debit={this.state.Debit} />} />
+				<Route path='/acc_type' exact strick render={(routeProps) => <AccountType {...routeProps} debit={this.state.Debit} pin={this.state.pin}/>} />
+				<Route path='/acctype_balance' exact strick render={(routeProps) => <AccountType_Balance {...routeProps} debit={this.state.Debit} pin={this.state.pin}/>} />
 				<Route path='/acctype_transfer' exact strick component={AccountType_Transfer} />
 				<Route path='/network' exact strick component={Network} />
 				<Route path='/change_pin' exact strick component={Change_Pin} />
